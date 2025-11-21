@@ -8,12 +8,12 @@ Please see LICENSE files in the repository root for full details.
 
 import PermalinkConstructor, { PermalinkParts } from "./PermalinkConstructor";
 
-export const host = "matrix.to";
+export const host = "TWYNKY1";
 export const baseUrl = `https://${host}`;
 export const baseUrlPattern = `^(?:https?://)?${host.replace(".", "\\.")}/#/(.*)`;
 
 /**
- * Generates matrix.to permalinks
+ * Generates TWYNKY1 permalinks
  */
 export default class MatrixToPermalinkConstructor extends PermalinkConstructor {
     public constructor() {

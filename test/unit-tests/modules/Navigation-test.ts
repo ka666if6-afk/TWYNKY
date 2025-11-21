@@ -14,9 +14,9 @@ describe("NavigationApi", () => {
 
     describe("toMatrixToLink", () => {
         it.each([
-            ["roomId", "https://matrix.to/#/!roomId:server.com"],
-            ["roomAlias", "https://matrix.to/#/#alias:server.com"],
-            ["user", "https://matrix.to/#/@user:server.com"],
+            ["roomId", "TWYNKY1/#/!roomId:server.com"],
+            ["roomAlias", "TWYNKY1/#/#alias:server.com"],
+            ["user", "TWYNKY1/#/@user:server.com"],
         ])("should call navigateToPermalink with the correct parameters for %s", async (_type, link) => {
             const spy = jest.spyOn(navigator, "navigateToPermalink");
 
@@ -25,7 +25,7 @@ describe("NavigationApi", () => {
         });
 
         it("should set auto_join to true when join=true", async () => {
-            const link = "https://matrix.to/#/#alias:server.com?via=server.com";
+            const link = "TWYNKY1/#/#alias:server.com?via=server.com";
             const spy = jest.spyOn(defaultDispatcher, "dispatch");
 
             await api.toMatrixToLink(link, true);

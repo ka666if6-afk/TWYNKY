@@ -12,7 +12,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { EventType, JoinRule, type Room } from "matrix-js-sdk/src/matrix";
 
 import Modal from "../../../../Modal";
-import { ShareDialog } from "../../dialogs/ShareDialog";
+// import { ShareDialog } from "../../dialogs/ShareDialog";
 import { _t } from "../../../../languageHandler";
 import { calculateRoomVia } from "../../../../utils/permalinks/Permalinks";
 import BaseDialog from "../../dialogs/BaseDialog";
@@ -52,11 +52,13 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
         try {
             // generateCallLink throws if the invite rules are not met
             const target = generateCallLink();
+            /* DISABLED: Share functionality
             Modal.createDialog(ShareDialog, {
                 target,
                 customTitle: _t("share|share_call"),
                 subtitle: _t("share|share_call_subtitle"),
             });
+            */
         } catch (e) {
             logger.error("Could not generate call link.", e);
         }
@@ -79,6 +81,7 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
 
     return (
         <>
+            {/* DISABLED: Share button
             {canInviteGuests && (
                 <Tooltip label={_t("voip|get_call_link")}>
                     <IconButton onClick={shareClick}>
@@ -86,6 +89,7 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
                     </IconButton>
                 </Tooltip>
             )}
+            */}
         </>
     );
 };

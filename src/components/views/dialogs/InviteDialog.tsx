@@ -17,6 +17,7 @@ import { RichList, RichItem, PillInput, Pill } from "@element-hq/web-shared-comp
 import { Icon as EmailPillAvatarIcon } from "../../../../res/img/icon-email-pill-avatar.svg";
 import { _t, _td } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import SdkConfig from "../../../SdkConfig";
 import { makeRoomPermalink, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import * as Email from "../../../email";
@@ -616,9 +617,29 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
     };
 
     private updateSuggestions = async (term: string): Promise<void> => {
-        MatrixClientPeg.safeGet()
-            .searchUserDirectory({ term })
-            .then(async (r): Promise<void> => {
+        // For autocomplete, query the homeserver using the localpart so partial
+        // matches are returned. Strip a leading '@' if present.
+        let serverTerm = term.trim();
+        if (serverTerm.startsWith("@")) serverTerm = serverTerm.substring(1);
+
+        // Try multiple candidate terms (localpart, full MXID) to improve coverage.
+        (async () => {
+            const { buildUserSearchTerms } = await import("../../../utils/MatrixIdUtils");
+            const candidates = buildUserSearchTerms(term);
+            let r: any = { results: [] };
+            for (const c of candidates) {
+                try {
+                    r = await MatrixClientPeg.safeGet().searchUserDirectory({ term: c });
+                    if (r?.results?.length) break;
+                } catch {
+                    // try next
+                }
+            }
+            // keep same behaviour as previous .then handler
+            if (term !== this.state.filterText) return;
+
+            if (!r.results) r.results = [];
+
                 if (term !== this.state.filterText) {
                     // Discard the results - we were probably too slow on the server-side to make
                     // these results useful. This is a race we want to avoid because we could overwrite
@@ -1182,7 +1203,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
      * errors from the previous iteration.
      */
     private renderSuggestions(): JSX.Element {
-        // If we're starting a DM, add a footer which showing our matrix.to link, for copying & pasting.
+        // If we're starting a DM, add a footer which showing our TWYNKY1 link, for copying & pasting.
         let footer;
         if (this.props.kind === InviteKind.Dm) {
             const link = makeUserPermalink(MatrixClientPeg.safeGet().getSafeUserId());

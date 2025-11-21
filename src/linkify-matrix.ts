@@ -24,6 +24,7 @@ import { type ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { type ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { PERMITTED_URL_SCHEMES } from "./utils/UrlUtils";
+import { getLocalPart } from "./utils/MatrixIdUtils";
 
 export enum Type {
     URL = "url",
@@ -92,10 +93,10 @@ function matrixOpaqueIdLinkifyParser({
 
 function onUserClick(event: MouseEvent, userId: string): void {
     event.preventDefault();
-    dis.dispatch<ViewUserPayload>({
-        action: Action.ViewUser,
-        member: new User(userId),
-    });
+    // Open a chat with the user directly when their @username is clicked.
+    // Dispatch a view_user action with userId and subAction 'chat' so the
+    // central handler will create or reuse a DM and navigate to it.
+    dis.dispatch({ action: Action.ViewUser, userId: getLocalPart(userId), subAction: "chat" } as any);
 }
 
 function onAliasClick(event: MouseEvent, roomAlias: string): void {
@@ -113,7 +114,7 @@ const escapeRegExp = function (s: string): string {
 };
 
 // Recognise URLs from both our local and official Element deployments.
-// Anyone else really should be using matrix.to. vector:// allowed to support Element Desktop relative links.
+// Anyone else really should be using TWYNKY1. vector:// allowed to support Element Desktop relative links.
 export const ELEMENT_URL_PATTERN =
     "^(?:vector://|https?://)?(?:" +
     escapeRegExp(window.location.host + window.location.pathname) +
@@ -132,7 +133,7 @@ function events(href: string, type: string): EventListeners {
                 if (permalink?.userId) {
                     return {
                         click: function (e: MouseEvent) {
-                            onUserClick(e, permalink.userId!);
+                            onUserClick(e, getLocalPart(permalink.userId!));
                         },
                     };
                 } else {
@@ -158,7 +159,7 @@ function events(href: string, type: string): EventListeners {
                 click: function (e: MouseEvent) {
                     e.preventDefault();
                     const userId = parsePermalink(href)?.userId ?? href;
-                    if (userId) onUserClick(e, userId);
+                    if (userId) onUserClick(e, getLocalPart(userId));
                 },
             };
         case Type.RoomAlias:
@@ -192,6 +193,21 @@ function attributes(href: string, type: string): Record<string, unknown> {
 
 export const options: Opts = {
     events,
+
+    // Ensure that @user:server links render as just the localpart (eg @alice)
+    // so the UI shows only `@username` without the server name.
+    format: function (value: string, type: Type | string): string {
+        try {
+            if (type === Type.UserId) {
+                const permalink = parsePermalink(value);
+                const userId = permalink?.userId ?? value;
+                return getLocalPart(userId);
+            }
+        } catch {
+            // ignore and fall through
+        }
+        return value;
+    },
 
     formatHref: function (href: string, type: Type | string): string {
         switch (type) {
@@ -227,7 +243,7 @@ export const options: Opts = {
             try {
                 const transformed = tryTransformPermalinkToLocalHref(href);
                 if (
-                    transformed !== href || // if it could be converted to handle locally for matrix symbols e.g. @user:server.tdl and matrix.to
+                    transformed !== href || // if it could be converted to handle locally for matrix symbols e.g. @user:server.tdl and TWYNKY1
                     decodeURIComponent(href).match(ELEMENT_URL_PATTERN) // for https links to Element domains
                 ) {
                     return "";

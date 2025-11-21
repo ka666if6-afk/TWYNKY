@@ -60,9 +60,96 @@ import { type IDiff } from "../../../editor/diff";
 import { getBlobSafeMimeType } from "../../../utils/blobs";
 import { EMOJI_REGEX } from "../../../HtmlUtils";
 import { attachMentions, attachRelation } from "../../../utils/messages";
+import { startDmOnFirstMessage, DirectoryMember } from "../../../utils/direct-messages";
+import { ensureFullMatrixId } from "../../../utils/MatrixIdUtils";
 
 // The prefix used when persisting editor drafts to localstorage.
 export const EDITOR_STATE_STORAGE_PREFIX = "mx_cider_state_";
+
+/**
+ * Convert @username mentions in formatted HTML body to proper Matrix ID links
+ * @param formattedBody HTML content to process
+ * @returns Modified HTML with @username converted to clickable user links
+ */
+function convertMentionsToLinks(formattedBody: string): string {
+    // Get the homeserver domain
+    const client = MatrixClientPeg.safeGet();
+    const homeserverUrl = client.getHomeserverUrl();
+    let serverDomain = "localhost";
+    if (homeserverUrl) {
+        try {
+            const url = new URL(homeserverUrl);
+            serverDomain = url.hostname || "localhost";
+        } catch (e) {
+            logger.debug("Failed to parse homeserver URL:", e);
+        }
+    }
+
+    // Pattern to match @username (ASCII only, not in HTML tags or href attributes)
+    // This regex matches @word but not @word if it's inside an href or HTML tag
+    return formattedBody.replace(
+        /(?<!href=["'][^"']*?)@([a-zA-Z0-9._\-]+)(?!([^<]*>|[^"']*["']))/g,
+        (match, username) => {
+            const fullUserId = `@${username}:${serverDomain}`;
+            // Escape the userId for use in HTML attribute
+            const encodedUserId = fullUserId
+                .replace(/&/g, "&amp;")
+                .replace(/"/g, "&quot;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+            return `<a href="TWYNKY1/#/${encodedUserId}">@${username}</a>`;
+        }
+    );
+}
+
+/**
+ * Convert #roomalias references in formatted HTML body to proper room links
+ * @param formattedBody HTML content to process
+ * @returns Modified HTML with #roomalias converted to clickable room links
+ */
+function convertRoomAliasToLinks(formattedBody: string): string {
+    // Get the homeserver domain
+    const client = MatrixClientPeg.safeGet();
+    const homeserverUrl = client.getHomeserverUrl();
+    let serverDomain = "localhost";
+    if (homeserverUrl) {
+        try {
+            const url = new URL(homeserverUrl);
+            serverDomain = url.hostname || "localhost";
+        } catch (e) {
+            logger.debug("Failed to parse homeserver URL:", e);
+        }
+    }
+
+    logger.debug("convertRoomAliasToLinks - input:", formattedBody);
+
+    // Pattern to match #roomalias
+    // Simple pattern: # followed by word characters (digits, letters, dots, underscores, hyphens)
+    const result = formattedBody.replace(
+        /#([a-zA-Z0-9._\-]+)/g,
+        (match, roomname) => {
+            // Skip if it's already part of an href
+            if (formattedBody.includes(`href="TWYNKY1/#/${match}`)) {
+                return match;
+            }
+            
+            const fullRoomAlias = `#${roomname}:${serverDomain}`;
+            // Escape the room alias for use in HTML attribute
+            const encodedRoomAlias = fullRoomAlias
+                .replace(/&/g, "&amp;")
+                .replace(/"/g, "&quot;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+            
+            logger.debug("Converting room alias:", match, "->", fullRoomAlias, "->", `TWYNKY1/#/${encodedRoomAlias}`);
+            // Use CSS class for consistent styling with @mentions
+            return `<a href="TWYNKY1/#/${encodedRoomAlias}" class="mx_UserPill" data-room-alias="${fullRoomAlias}">#${roomname}</a>`;
+        }
+    );
+    
+    logger.debug("convertRoomAliasToLinks - output:", result);
+    return result;
+}
 
 // exported for tests
 export function createMessageContent(
@@ -86,12 +173,23 @@ export function createMessageContent(
         msgtype: isEmote ? MsgType.Emote : MsgType.Text,
         body: body,
     };
-    const formattedBody = htmlSerializeIfNeeded(model, {
+    let formattedBody = htmlSerializeIfNeeded(model, {
         useMarkdown: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
     });
+    
+    logger.debug("createMessageContent - formattedBody exists?", !!formattedBody, "value:", formattedBody);
+    
+    // Convert @username mentions and #roomalias to clickable links in formatted body
     if (formattedBody) {
+        logger.debug("createMessageContent - original formattedBody:", formattedBody);
+        formattedBody = convertMentionsToLinks(formattedBody);
+        logger.debug("createMessageContent - after mentions:", formattedBody);
+        formattedBody = convertRoomAliasToLinks(formattedBody);
+        logger.debug("createMessageContent - after room alias:", formattedBody);
         content.format = "org.matrix.custom.html";
         content.formatted_body = formattedBody;
+    } else {
+        logger.debug("createMessageContent - formattedBody is empty/falsy");
     }
 
     // Build the mentions property and add it to the event content.
@@ -415,6 +513,33 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             }
             // don't bother sending an empty message
             if (!content.body.trim()) return;
+
+            // If the message is just a single MXID/localpart mention (eg. "@alice" or "alice"),
+            // treat it as an intent to start a DM instead of sending into the current room.
+            const bodyTrim = content.body.trim();
+            // Only match valid Matrix IDs: must start with @ or contain only ASCII alphanumeric/.-_
+            // This prevents matching regular messages in non-Latin scripts (e.g., "привет")
+            const onlyMentionRegex = /^@[a-zA-Z0-9._\-]+(:[a-zA-Z0-9.\-:]+)?$|^[a-zA-Z0-9._\-]+:[a-zA-Z0-9.\-:]+$/;
+            if (onlyMentionRegex.test(bodyTrim)) {
+                try {
+                    const maybeAt = bodyTrim.startsWith("@") ? bodyTrim : `@${bodyTrim}`;
+                    const fullId = ensureFullMatrixId(maybeAt);
+                    const member = new DirectoryMember({ user_id: fullId, display_name: undefined, avatar_url: undefined });
+                    // Start DM and switch view — this will navigate away from current room to the DM.
+                    await startDmOnFirstMessage(this.props.mxClient, [member]);
+
+                    // Save to history and clear composer (like a send would do), but do not post a message
+                    this.sendHistoryManager.save(model, replyToEvent);
+                    model.reset([]);
+                    this.editorRef.current?.clearUndoHistory();
+                    this.editorRef.current?.focus();
+                    this.clearStoredEditorState();
+                    return;
+                } catch (e) {
+                    // fall through and send as normal if DM start fails
+                    logger.warn("Failed to start DM from composer mention", e);
+                }
+            }
 
             if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
                 decorateStartSendingTime(content);

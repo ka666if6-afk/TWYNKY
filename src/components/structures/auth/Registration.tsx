@@ -44,6 +44,7 @@ import { AuthHeaderDisplay } from "./header/AuthHeaderDisplay";
 import { AuthHeaderProvider } from "./header/AuthHeaderProvider";
 import SettingsStore from "../../../settings/SettingsStore";
 import { type ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
+import SdkConfig from "../../../SdkConfig";
 import { startOidcLogin } from "../../../utils/oidc/authorize";
 
 const debuglog = (...args: any[]): void => {

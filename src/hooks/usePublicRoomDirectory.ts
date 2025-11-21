@@ -97,9 +97,40 @@ export const usePublicRoomDirectory = (): {
                 opts.third_party_instance_id = config.instanceId;
             }
 
-            if (query || roomTypes) {
+            // Convert room alias to full format with domain
+            let searchQuery = query;
+            const trimmedQuery = query?.trim() || "";
+            
+            if (trimmedQuery && !trimmedQuery.startsWith("@")) {
+                // Get homeserver domain - use TWYNKY as default
+                const serverDomain = "TWYNKY";
+                const homeserverUrl = MatrixClientPeg.safeGet().getHomeserverUrl();
+
+                // Check if query looks like a room alias or ID (starts with # or !)
+                // If it's a number or word, treat it as room alias and add domain
+                if (!trimmedQuery.startsWith("#") && !trimmedQuery.startsWith("!")) {
+                    // If it doesn't start with # or !, add it (room alias format)
+                    searchQuery = `#${trimmedQuery}:${serverDomain}`;
+                } else if (trimmedQuery.startsWith("#") && !trimmedQuery.includes(":")) {
+                    // Already has # but missing domain - add the domain
+                    searchQuery = `${trimmedQuery}:${serverDomain}`;
+                } else if (trimmedQuery.startsWith("!") && !trimmedQuery.includes(":")) {
+                    // Room ID without domain - add the domain
+                    searchQuery = `${trimmedQuery}:${serverDomain}`;
+                }
+                // else: already has domain or is @mention, keep as is
+
+                console.log("Homeserver URL:", homeserverUrl);
+                console.log("Original query:", trimmedQuery);
+                console.log("Searching room directory with query:", searchQuery);
+            } else if (trimmedQuery === "") {
+                // Clear search when query is empty
+                searchQuery = "";
+            }
+
+            if (searchQuery || roomTypes) {
                 opts.filter = {
-                    generic_search_term: query,
+                    generic_search_term: searchQuery,
                     room_types:
                         roomTypes &&
                         (await MatrixClientPeg.safeGet().doesServerSupportUnstableFeature("org.matrix.msc3827.stable"))
@@ -112,7 +143,42 @@ export const usePublicRoomDirectory = (): {
             setLoading(true);
             setError(undefined);
             try {
-                const { chunk } = await MatrixClientPeg.safeGet().publicRooms(opts);
+                let chunk: IPublicRoomsChunkRoom[] = [];
+                
+                // If query looks like a room alias or ID, try direct lookup first
+                if (searchQuery && (searchQuery.startsWith("#") || searchQuery.startsWith("!"))) {
+                    try {
+                        console.log("Attempting direct alias/ID lookup for:", searchQuery);
+                        const roomInfo = await MatrixClientPeg.safeGet().getRoomIdForAlias(searchQuery as any);
+                        if (roomInfo) {
+                            console.log("Found room via alias lookup:", roomInfo);
+                            // Create a room chunk object from the room info
+                            chunk = [{
+                                avatar_url: undefined,
+                                canonical_alias: searchQuery,
+                                guest_can_join: false,
+                                join_rule: "invite",
+                                name: searchQuery,
+                                num_joined_members: 0,
+                                room_id: roomInfo.room_id,
+                                room_type: null,
+                                topic: "",
+                                world_readable: false,
+                            }];
+                        }
+                    } catch (aliasError) {
+                        console.debug("Direct alias lookup failed, falling back to generic search:", aliasError);
+                        // Fall through to generic search
+                    }
+                }
+                
+                // If direct lookup didn't find anything, use generic search
+                if (chunk.length === 0) {
+                    console.log("Using generic search for query:", searchQuery);
+                    const result = await MatrixClientPeg.safeGet().publicRooms(opts);
+                    chunk = result.chunk;
+                }
+                
                 updateResult(opts, showNsfwPublicRooms ? chunk : chunk.filter(cheapNsfwFilter));
                 return true;
             } catch (e) {

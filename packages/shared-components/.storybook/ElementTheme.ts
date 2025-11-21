@@ -23,6 +23,6 @@ export default create({
 
     brandTitle: "Element Web",
     brandUrl: "https://github.com/element-hq/element-web",
-    brandImage: "https://element.io/images/logo-ele-secondary.svg",
+    brandImage: "TWYNKY22images/logo-ele-secondary.svg",
     brandTarget: "_self",
 });

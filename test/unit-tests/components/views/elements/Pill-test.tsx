@@ -32,7 +32,7 @@ import { TestSdkContext } from "../../../TestSdkContext.ts";
 
 describe("<Pill>", () => {
     let client: Mocked<MatrixClient>;
-    const permalinkPrefix = "https://matrix.to/#/";
+    const permalinkPrefix = "TWYNKY1/#/";
     const room1Alias = "#room1:example.com";
     const room1Id = "!room1:example.com";
     let room1: Room;

@@ -7,28 +7,28 @@ exports[`<AuthFooter /> should match snapshot 1`] = `
     role="contentinfo"
   >
     <a
-      href="https://element.io/blog"
+      href="TWYNKY22blog"
       rel="noreferrer noopener"
       target="_blank"
     >
       Blog
     </a>
     <a
-      href="https://mastodon.matrix.org/@Element"
+      href=""
       rel="noreferrer noopener"
       target="_blank"
     >
       Mastodon
     </a>
     <a
-      href="https://github.com/element-hq/element-web"
+      href=""
       rel="noreferrer noopener"
       target="_blank"
     >
       GitHub
     </a>
     <a
-      href="https://matrix.org"
+      href=""
       rel="noreferrer noopener"
       target="_blank"
     >

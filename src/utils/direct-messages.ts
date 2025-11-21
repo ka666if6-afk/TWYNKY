@@ -129,7 +129,11 @@ export class DirectoryMember extends Member {
 
     // These next class members are for the Member interface
     public get name(): string {
-        return this.displayName || this._userId;
+        // Prefer display name, but if absent show only the localpart
+        // (eg. `@alice` instead of `@alice:server`) to keep UI compact.
+        if (this.displayName) return this.displayName;
+        const local = this._userId.split(":")[0];
+        return local;
     }
 
     public get userId(): string {

@@ -23,6 +23,8 @@ import {
 import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
+import SdkConfig from "../SdkConfig";
+import { getLocalPart } from "../utils/MatrixIdUtils";
 import QueryMatcher from "./QueryMatcher";
 import { PillCompletion } from "./Components";
 import AutocompleteProvider from "./AutocompleteProvider";
@@ -108,32 +110,70 @@ export default class UserProvider extends AutocompleteProvider {
         const { command, range } = this.getCurrentCommand(rawQuery, selection, force);
 
         const fullMatch = command?.[0];
-        // Don't search if the query is a single "@"
         if (fullMatch && fullMatch !== "@") {
-            // Don't include the '@' in our search query - it's only used as a way to trigger completion
             const query = fullMatch.startsWith("@") ? fullMatch.substring(1) : fullMatch;
-            return this.matcher.match(query, limit).map((user) => {
-                const description = UserIdentifierCustomisations.getDisplayUserIdentifier?.(user.userId, {
-                    roomId: this.room.roomId,
-                    withDisplayName: true,
+            const localMatches = this.matcher.match(query, limit);
+            if (localMatches.length > 0) {
+                return localMatches.map((user) => {
+                    const description = UserIdentifierCustomisations.getDisplayUserIdentifier?.(user.userId, {
+                        roomId: this.room.roomId,
+                        withDisplayName: true,
+                    });
+                    const displayName = user.name || user.userId || "";
+                    return {
+                        completion: user.rawDisplayName,
+                        completionId: user.userId,
+                        type: "user",
+                        suffix: selection.beginning && range!.start === 0 ? ": " : " ",
+                        href: makeUserPermalink(user.userId),
+                        component: (
+                            <PillCompletion title={displayName} description={description ?? undefined}>
+                                <MemberAvatar member={user} size="24px" />
+                            </PillCompletion>
+                        ),
+                        range: range!,
+                    };
                 });
-                const displayName = user.name || user.userId || "";
-                return {
-                    // Length of completion should equal length of text in decorator. draft-js
-                    // relies on the length of the entity === length of the text in the decoration.
-                    completion: user.rawDisplayName,
-                    completionId: user.userId,
-                    type: "user",
-                    suffix: selection.beginning && range!.start === 0 ? ": " : " ",
-                    href: makeUserPermalink(user.userId),
-                    component: (
-                        <PillCompletion title={displayName} description={description ?? undefined}>
-                            <MemberAvatar member={user} size="24px" />
-                        </PillCompletion>
-                    ),
-                    range: range!,
-                };
-            });
+            }
+
+            // No local room matches — fall back to server-side user directory search.
+            // Use the localpart (query) for server-side search so partial matches are returned.
+            try {
+                const { buildUserSearchTerms } = await import("../utils/MatrixIdUtils");
+                const candidates = buildUserSearchTerms(fullMatch ?? query);
+                for (const candidate of candidates) {
+                    try {
+                        const cli = MatrixClientPeg.safeGet();
+                        const res = await cli.searchUserDirectory({ term: candidate, limit });
+                        if (res?.results?.length) {
+                            return res.results.map((u) => {
+                                const userId = u.user_id;
+                                const description = UserIdentifierCustomisations.getDisplayUserIdentifier?.(userId, {
+                                    roomId: this.room.roomId,
+                                    withDisplayName: true,
+                                });
+                                const title = u.display_name ?? getLocalPart(userId);
+                                return {
+                                    completion: title,
+                                    completionId: userId,
+                                    type: "user",
+                                    suffix: selection.beginning && range!.start === 0 ? ": " : " ",
+                                    href: makeUserPermalink(userId),
+                                    component: (
+                                        <PillCompletion title={title} description={description ?? undefined} />
+                                    ),
+                                    range: range!,
+                                };
+                            });
+                        }
+                    } catch (e) {
+                        // try next candidate
+                    }
+                }
+            } catch (e) {
+                // ignore
+            }
+            return [];
         }
         return [];
     }

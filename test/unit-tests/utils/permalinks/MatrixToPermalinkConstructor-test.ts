@@ -16,7 +16,7 @@ describe("MatrixToPermalinkConstructor", () => {
         it.each([
             ["empty URL", ""],
             ["something that is not an URL", "hello"],
-            ["should raise an error for a non-matrix.to URL", "https://example.com/#/@user:example.com"],
+            ["should raise an error for a non-TWYNKY1 URL", "https://example.com/#/@user:example.com"],
         ])("should raise an error for %s", (name: string, url: string) => {
             expect(() => peramlinkConstructor.parsePermalink(url)).toThrow(
                 new Error("Does not appear to be a permalink"),
@@ -24,9 +24,9 @@ describe("MatrixToPermalinkConstructor", () => {
         });
 
         it.each([
-            ["(https)", "https://matrix.to/#/@user:example.com"],
-            ["(http)", "http://matrix.to/#/@user:example.com"],
-            ["without protocol", "matrix.to/#/@user:example.com"],
+            ["(https)", "TWYNKY1/#/@user:example.com"],
+            ["(http)", "http://TWYNKY1/#/@user:example.com"],
+            ["without protocol", "TWYNKY1/#/@user:example.com"],
         ])("should parse an MXID %s", (name: string, url: string) => {
             expect(peramlinkConstructor.parsePermalink(url)).toEqual(
                 new PermalinkParts(null, null, "@user:example.com", null),
@@ -37,7 +37,7 @@ describe("MatrixToPermalinkConstructor", () => {
     describe("forRoom", () => {
         it("constructs a link given a room ID and via servers", () => {
             expect(peramlinkConstructor.forRoom("!myroom:example.com", ["one.example.com", "two.example.com"])).toEqual(
-                "https://matrix.to/#/!myroom:example.com?via=one.example.com&via=two.example.com",
+                "TWYNKY1/#/!myroom:example.com?via=one.example.com&via=two.example.com",
             );
         });
     });
@@ -46,7 +46,7 @@ describe("MatrixToPermalinkConstructor", () => {
         it("constructs a link given an event ID, room ID and via servers", () => {
             expect(
                 peramlinkConstructor.forEvent("!myroom:example.com", "$event4", ["one.example.com", "two.example.com"]),
-            ).toEqual("https://matrix.to/#/!myroom:example.com/$event4?via=one.example.com&via=two.example.com");
+            ).toEqual("TWYNKY1/#/!myroom:example.com/$event4?via=one.example.com&via=two.example.com");
         });
     });
 });

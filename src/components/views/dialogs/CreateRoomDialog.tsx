@@ -434,7 +434,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         {visibilitySection}
                         {e2eeSection}
                         {aliasField}
-                        {this.advancedSettingsEnabled && (
+                        {this.advancedSettingsEnabled && SdkConfig.get().default_federate !== false && (
                             <details onToggle={this.onDetailsToggled} className="mx_CreateRoomDialog_details">
                                 <summary className="mx_CreateRoomDialog_details_summary">
                                     {this.state.detailsOpen ? _t("action|hide_advanced") : _t("action|show_advanced")}

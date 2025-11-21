@@ -67,7 +67,7 @@ exports[`<Pill> should render the expected pill for a known user not in the room
     <bdi>
       <a
         class="mx_Pill mx_UserPill"
-        href="https://matrix.to/#/@user2:example.com"
+        href="TWYNKY1/#/@user2:example.com"
       >
         <span
           aria-hidden="true"
@@ -97,7 +97,7 @@ exports[`<Pill> should render the expected pill for a message in another room 1`
     <bdi>
       <a
         class="mx_Pill mx_EventPill"
-        href="https://matrix.to/#/!room1:example.com/$123-456"
+        href="TWYNKY1/#/!room1:example.com/$123-456"
       >
         <span
           aria-hidden="true"
@@ -127,7 +127,7 @@ exports[`<Pill> should render the expected pill for a message in the same room 1
     <bdi>
       <a
         class="mx_Pill mx_EventPill"
-        href="https://matrix.to/#/!room1:example.com/$123-456"
+        href="TWYNKY1/#/!room1:example.com/$123-456"
       >
         <span
           aria-hidden="true"
@@ -157,7 +157,7 @@ exports[`<Pill> should render the expected pill for a room alias 1`] = `
     <bdi>
       <a
         class="mx_Pill mx_RoomPill"
-        href="https://matrix.to/#/#room1:example.com"
+        href="TWYNKY1/#/#room1:example.com"
       >
         <span
           aria-hidden="true"
@@ -187,7 +187,7 @@ exports[`<Pill> should render the expected pill for a space 1`] = `
     <bdi>
       <a
         class="mx_Pill mx_RoomPill"
-        href="https://matrix.to/#/!space1:example.com"
+        href="TWYNKY1/#/!space1:example.com"
       >
         <span
           aria-hidden="true"
@@ -217,7 +217,7 @@ exports[`<Pill> should render the expected pill for an uknown user not in the ro
     <bdi>
       <a
         class="mx_Pill mx_UserPill"
-        href="https://matrix.to/#/@user3:example.com"
+        href="TWYNKY1/#/@user3:example.com"
       >
         <svg
           class="mx_Pill_UserIcon mx_BaseAvatar"
@@ -248,7 +248,7 @@ exports[`<Pill> when rendering a pill for a room should render the expected pill
     <bdi>
       <a
         class="mx_Pill mx_RoomPill"
-        href="https://matrix.to/#/!room1:example.com"
+        href="TWYNKY1/#/!room1:example.com"
       >
         <span
           aria-hidden="true"
@@ -278,7 +278,7 @@ exports[`<Pill> when rendering a pill for a user in the room should render as ex
     <bdi>
       <a
         class="mx_Pill mx_UserPill"
-        href="https://matrix.to/#/@user1:example.com"
+        href="TWYNKY1/#/@user1:example.com"
       >
         <span
           aria-hidden="true"

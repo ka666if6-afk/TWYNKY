@@ -142,7 +142,7 @@ describe("editor/roundtrip", function () {
 
         test.skip.each([
             // Strips out the pill - maybe needs some user lookup to work?
-            ["user pills", '<a href="https://matrix.to/#/@alice:hs.tld">Alice</a>'],
+            ["user pills", '<a href="TWYNKY1/#/@alice:hs.tld">Alice</a>'],
             // Appends a slash to the URL
             // https://github.com/vector-im/element-web/issues/22342
             ["links without trailing slashes", 'Go <a href="http://more.example.com">here</a> to see more'],

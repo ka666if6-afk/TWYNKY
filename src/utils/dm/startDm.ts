@@ -18,6 +18,7 @@ import { findDMForUser } from "./findDMForUser";
 import dis from "../../dispatcher/dispatcher";
 import { getAddressType } from "../../UserAddress";
 import createRoom, { type IOpts } from "../../createRoom";
+import { ensureFullMatrixId } from "../MatrixIdUtils";
 
 /**
  * Start a DM.
@@ -25,7 +26,8 @@ import createRoom, { type IOpts } from "../../createRoom";
  * @returns {Promise<string | null} Resolves to the room id.
  */
 export async function startDm(client: MatrixClient, targets: Member[], showSpinner = true): Promise<string | null> {
-    const targetIds = targets.map((t) => t.userId);
+    // Ensure all target IDs have the full Matrix ID format (with domain)
+    const targetIds = targets.map((t) => ensureFullMatrixId(t.userId));
 
     // Check if there is already a DM with these people and reuse it if possible.
     let existingRoom: Optional<Room>;

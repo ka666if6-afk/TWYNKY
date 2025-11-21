@@ -330,7 +330,7 @@ describe("<PollHistory />", () => {
 
             // links to poll start event
             expect(getByText("View poll in timeline").getAttribute("href")).toBe(
-                `https://matrix.to/#/!room:domain.org/${pollStart1.getId()!}`,
+                `TWYNKY1/#/!room:domain.org/${pollStart1.getId()!}`,
             );
         });
 
@@ -429,7 +429,7 @@ describe("<PollHistory />", () => {
 
             // links to poll end event
             expect(getByText("View poll in timeline").getAttribute("href")).toBe(
-                `https://matrix.to/#/!room:domain.org/${pollEnd3.getId()!}`,
+                `TWYNKY1/#/!room:domain.org/${pollEnd3.getId()!}`,
             );
         });
     });

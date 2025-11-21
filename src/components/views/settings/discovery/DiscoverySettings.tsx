@@ -17,7 +17,6 @@ import { type ThirdPartyIdentifier } from "../../../../AddThreepid";
 import SettingsStore from "../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../settings/UIFeature";
 import { _t } from "../../../../languageHandler";
-import SetIdServer from "../SetIdServer";
 import { SettingsSubsection } from "../shared/SettingsSubsection";
 import InlineTermsAgreement from "../../terms/InlineTermsAgreement";
 import { Service, type ServicePolicyPair, startTermsFlow } from "../../../../Terms";
@@ -140,8 +139,7 @@ export const DiscoverySettings: React.FC = () => {
                     onFinished={requiredPolicyInfo.resolve}
                     introElement={intro}
                 />
-                {/* has its own heading as it includes the current identity server */}
-                <SetIdServer missingTerms={true} />
+                />
             </>
         );
     }
@@ -185,8 +183,6 @@ export const DiscoverySettings: React.FC = () => {
     return (
         <SettingsSubsection heading={_t("settings|discovery|title")} data-testid="discoverySection" stretchContent>
             {threepidSection}
-            {/* has its own heading as it includes the current identity server */}
-            <SetIdServer missingTerms={false} />
         </SettingsSubsection>
     );
 };

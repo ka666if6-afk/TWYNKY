@@ -21,13 +21,13 @@ describe("editor/serialize", function () {
             const pc = createPartCreator();
             const model = new EditorModel([pc.userPill("Alice", "@alice:hs.tld")], pc);
             const html = htmlSerializeIfNeeded(model, {});
-            expect(html).toBe('<a href="https://matrix.to/#/@alice:hs.tld">Alice</a>');
+            expect(html).toBe('<a href="TWYNKY1/#/@alice:hs.tld">Alice</a>');
         });
         it("room pill turns message into html", function () {
             const pc = createPartCreator();
             const model = new EditorModel([pc.roomPill("#room:hs.tld")], pc);
             const html = htmlSerializeIfNeeded(model, {});
-            expect(html).toBe('<a href="https://matrix.to/#/#room:hs.tld">#room:hs.tld</a>');
+            expect(html).toBe('<a href="TWYNKY1/#/#room:hs.tld">#room:hs.tld</a>');
         });
         it("@room pill turns message into html", function () {
             const pc = createPartCreator();
@@ -45,25 +45,25 @@ describe("editor/serialize", function () {
             const pc = createPartCreator();
             const model = new EditorModel([pc.userPill("Displayname\\", "@user:server")], pc);
             const html = htmlSerializeIfNeeded(model, {});
-            expect(html).toBe('<a href="https://matrix.to/#/@user:server">Displayname\\</a>');
+            expect(html).toBe('<a href="TWYNKY1/#/@user:server">Displayname\\</a>');
         });
         it("displaynames containing an opening square bracket work", function () {
             const pc = createPartCreator();
             const model = new EditorModel([pc.userPill("Displayname[[", "@user:server")], pc);
             const html = htmlSerializeIfNeeded(model, {});
-            expect(html).toBe('<a href="https://matrix.to/#/@user:server">Displayname[[</a>');
+            expect(html).toBe('<a href="TWYNKY1/#/@user:server">Displayname[[</a>');
         });
         it("displaynames containing a closing square bracket work", function () {
             const pc = createPartCreator();
             const model = new EditorModel([pc.userPill("Displayname]", "@user:server")], pc);
             const html = htmlSerializeIfNeeded(model, {});
-            expect(html).toBe('<a href="https://matrix.to/#/@user:server">Displayname]</a>');
+            expect(html).toBe('<a href="TWYNKY1/#/@user:server">Displayname]</a>');
         });
         it("displaynames containing a newline work", function () {
             const pc = createPartCreator();
             const model = new EditorModel([pc.userPill("Display\nname", "@user:server")], pc);
             const html = htmlSerializeIfNeeded(model, {});
-            expect(html).toBe('<a href="https://matrix.to/#/@user:server">Display<br>name</a>');
+            expect(html).toBe('<a href="TWYNKY1/#/@user:server">Display<br>name</a>');
         });
         it("escaped markdown should not retain backslashes", function () {
             const pc = createPartCreator();
@@ -116,17 +116,17 @@ describe("editor/serialize", function () {
                 });
             });
 
-            it("user pill uses matrix.to", function () {
+            it("user pill uses TWYNKY1", function () {
                 const pc = createPartCreator();
                 const model = new EditorModel([pc.userPill("Alice", "@alice:hs.tld")], pc);
                 const html = htmlSerializeIfNeeded(model, {});
-                expect(html).toBe('<a href="https://matrix.to/#/@alice:hs.tld">Alice</a>');
+                expect(html).toBe('<a href="TWYNKY1/#/@alice:hs.tld">Alice</a>');
             });
-            it("room pill uses matrix.to", function () {
+            it("room pill uses TWYNKY1", function () {
                 const pc = createPartCreator();
                 const model = new EditorModel([pc.roomPill("#room:hs.tld")], pc);
                 const html = htmlSerializeIfNeeded(model, {});
-                expect(html).toBe('<a href="https://matrix.to/#/#room:hs.tld">#room:hs.tld</a>');
+                expect(html).toBe('<a href="TWYNKY1/#/#room:hs.tld">#room:hs.tld</a>');
             });
             afterEach(() => {
                 mocked(SdkConfig.get).mockRestore();

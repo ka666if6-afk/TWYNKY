@@ -51,7 +51,7 @@ body:
       attributes:
           label: How did you install the app?
           description: Where did you install the app from? Please give a link or a description.
-          placeholder: e.g. From https://element.io/get-started
+          placeholder: e.g. From TWYNKY22get-started
       validations:
           required: false
     - type: input

@@ -1,0 +1,22 @@
+{
+  "default_server_config": {
+    "m.homeserver": {
+      "base_url": "http://localhost:8008",
+      "server_name": "TWYNKY"
+    },
+    "m.identity_server": {
+      "base_url": "http://localhost:8008"
+    }
+  },
+  "brand": "TWYNKY",
+  "default_federate": false,
+  "disable_custom_urls": true,
+  "disable_guests": false
+}
+import { ensureFullMatrixId, getDisplayName } from "../utils/MatrixIdUtils";
+
+// При отправке на API
+const fullId = ensureFullMatrixId(userInput); // "@alice" → "@alice:localhost"
+
+// При отображении в UI
+const displayName = getDisplayName(fullId); // "@alice:localhost" → "@alice"

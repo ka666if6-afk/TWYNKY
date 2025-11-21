@@ -52,8 +52,12 @@ const onHelpClick = (): void => {
 const ServerPicker: React.FC<IProps> = ({ title, dialogTitle, serverConfig, onServerConfigChange, disabled }) => {
     const disableCustomUrls = SdkConfig.get("disable_custom_urls");
 
+    // If custom URLs / server selection is disabled globally, hide the entire
+    // ServerPicker component so users don't see or interact with server selection.
+    if (disableCustomUrls) return null;
+
     let editBtn;
-    if (!disableCustomUrls && onServerConfigChange) {
+    if (onServerConfigChange) {
         const onClick = (): void => {
             showPickerDialog(dialogTitle, serverConfig, (config?: ValidatedServerConfig) => {
                 if (config) {
@@ -85,13 +89,7 @@ const ServerPicker: React.FC<IProps> = ({ title, dialogTitle, serverConfig, onSe
     return (
         <div className="mx_ServerPicker">
             <h2>{title || _t("common|homeserver")}</h2>
-            {!disableCustomUrls ? (
-                <AccessibleButton
-                    className="mx_ServerPicker_help"
-                    onClick={onHelpClick}
-                    aria-label={_t("common|help")}
-                />
-            ) : null}
+            <AccessibleButton className="mx_ServerPicker_help" onClick={onHelpClick} aria-label={_t("common|help")} />
             <span className="mx_ServerPicker_server" title={typeof serverName === "string" ? serverName : undefined}>
                 {serverName}
             </span>

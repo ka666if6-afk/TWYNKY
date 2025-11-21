@@ -114,7 +114,7 @@ describe("<RoomPredecessorTile />", () => {
         renderTile(makeRoom({ createEventHasPredecessor: true }));
         expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
             "href",
-            "https://matrix.to/#/old_room_id/$tombstone_event_id",
+            "TWYNKY1/#/old_room_id/$tombstone_event_id",
         );
     });
 
@@ -149,7 +149,7 @@ describe("<RoomPredecessorTile />", () => {
         renderTile(makeRoom({ createEventHasPredecessor: true, predecessorEventExists: true }));
         expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
             "href",
-            "https://matrix.to/#/old_room_id/$tombstone_event_id",
+            "TWYNKY1/#/old_room_id/$tombstone_event_id",
         );
     });
 
@@ -181,7 +181,7 @@ describe("<RoomPredecessorTile />", () => {
             renderTile(makeRoom({ createEventHasPredecessor: true }));
             expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
                 "href",
-                "https://matrix.to/#/old_room_id/$tombstone_event_id",
+                "TWYNKY1/#/old_room_id/$tombstone_event_id",
             );
         });
 
@@ -189,7 +189,7 @@ describe("<RoomPredecessorTile />", () => {
             renderTile(makeRoom({ createEventHasPredecessor: true, predecessorEventExists: true }));
             expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
                 "href",
-                "https://matrix.to/#/old_room_id_from_predecessor",
+                "TWYNKY1/#/old_room_id_from_predecessor",
             );
         });
 
@@ -203,7 +203,7 @@ describe("<RoomPredecessorTile />", () => {
             );
             expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
                 "href",
-                "https://matrix.to/#/old_room_id_from_predecessor/$tombstone_event_id_from_predecessor",
+                "TWYNKY1/#/old_room_id_from_predecessor/$tombstone_event_id_from_predecessor",
             );
         });
 
@@ -231,7 +231,7 @@ describe("<RoomPredecessorTile />", () => {
                 );
                 expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
                     "href",
-                    "https://matrix.to/#/old_room_id_from_predecessor?via=a.example.com&via=b.example.com",
+                    "TWYNKY1/#/old_room_id_from_predecessor?via=a.example.com&via=b.example.com",
                 );
             });
 
@@ -246,7 +246,7 @@ describe("<RoomPredecessorTile />", () => {
                 );
                 expect(screen.getByText("Click here to see older messages.")).toHaveAttribute(
                     "href",
-                    "https://matrix.to/#/old_room_id_from_predecessor/$tombstone_event_id_from_predecessor?via=a.example.com&via=b.example.com",
+                    "TWYNKY1/#/old_room_id_from_predecessor/$tombstone_event_id_from_predecessor?via=a.example.com&via=b.example.com",
                 );
             });
         });

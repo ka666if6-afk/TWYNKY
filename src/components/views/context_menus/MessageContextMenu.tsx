@@ -38,7 +38,7 @@ import ContextMenu, { toRightOf, type MenuProps } from "../../structures/Context
 import ReactionPicker from "../emojipicker/ReactionPicker";
 import ViewSource from "../../structures/ViewSource";
 import { createRedactEventDialog } from "../dialogs/ConfirmRedactDialog";
-import { ShareDialog } from "../dialogs/ShareDialog";
+// import { ShareDialog } from "../dialogs/ShareDialog";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import EndPollDialog from "../dialogs/EndPollDialog";
 import { isPollEnded } from "../messages/MPollBody";
@@ -277,14 +277,15 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
-    private onShareClick = (e: ButtonEvent): void => {
-        e.preventDefault();
-        Modal.createDialog(ShareDialog, {
-            target: this.props.mxEvent,
-            permalinkCreator: this.props.permalinkCreator,
-        });
-        this.closeMenu();
-    };
+    // DISABLED: Share functionality
+    // private onShareClick = (e: ButtonEvent): void => {
+    //     e.preventDefault();
+    //     Modal.createDialog(ShareDialog, {
+    //         target: this.props.mxEvent,
+    //         permalinkCreator: this.props.permalinkCreator,
+    //     });
+    //     this.closeMenu();
+    // };
 
     private onCopyLinkClick = (e: ButtonEvent): void => {
         e.preventDefault(); // So that we don't open the permalink
@@ -482,7 +483,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        let permalinkButton: JSX.Element | undefined;
+        // DISABLED: Share functionality
+        /* let permalinkButton: JSX.Element | undefined;
         if (permalink) {
             permalinkButton = (
                 <IconizedContextMenuOption
@@ -501,6 +503,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 />
             );
         }
+        */ 
+        let permalinkButton: JSX.Element | undefined; // DISABLED: Share functionality
 
         let endPollButton: JSX.Element | undefined;
         if (this.canEndPoll(mxEvent)) {
@@ -715,7 +719,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 {openInMapSiteButton}
                 {endPollButton}
                 {forwardButton}
-                {permalinkButton}
+                {/* {permalinkButton} */} {/* DISABLED: Share functionality */}
                 {reportEventButton}
                 {externalURLButton}
                 {jumpToRelatedEventButton}

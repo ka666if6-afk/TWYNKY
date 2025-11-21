@@ -12,6 +12,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
 import { mediaFromMxc } from "../../../customisations/Media";
+import { getLocalPart } from "../../../utils/MatrixIdUtils";
 import VerificationComplete from "../verification/VerificationComplete";
 import VerificationCancelled from "../verification/VerificationCancelled";
 import BaseAvatar from "../avatars/BaseAvatar";
@@ -162,7 +163,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
                         idName={this.props.verifier.userId}
                         size="48px"
                     />
-                    <h2>{this.props.verifier.userId}</h2>
+                    <h2>{getLocalPart(this.props.verifier.userId)}</h2>
                 </div>
             );
         } else {

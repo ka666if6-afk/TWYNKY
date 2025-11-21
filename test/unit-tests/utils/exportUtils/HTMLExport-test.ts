@@ -85,7 +85,7 @@ const EVENT_MENTION: IRoomEvent = {
         "msgtype": "m.text",
         "body": "Message Alex",
         "format": "org.matrix.custom.html",
-        "formatted_body": 'Message <a href="https://matrix.to/#/@alex:example.org">@alex:example.org</a>',
+        "formatted_body": 'Message <a href="TWYNKY1/#/@alex:example.org">@alex:example.org</a>',
         "m.mentions": { user_ids: ["@alex:example.org"] },
     },
 };

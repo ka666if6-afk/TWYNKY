@@ -20,6 +20,7 @@ import { MemberListHeaderView } from "./MemberListHeaderView";
 import BaseCard from "../../right_panel/BaseCard";
 import { _t } from "../../../../languageHandler";
 import { type ListContext, ListView } from "../../../utils/ListView";
+import { getLocalPart } from "../../../../utils/MatrixIdUtils";
 
 interface IProps {
     roomId: string;
@@ -44,7 +45,8 @@ const MemberListView: React.FC<IProps> = (props: IProps) => {
         if (item === SEPARATOR) {
             return "separator";
         } else if (item.member) {
-            return `member-${item.member.userId}`;
+            // Используем только localpart для ключа отображения
+            return `member-${getLocalPart(item.member.userId)}`;
         } else {
             return `threePidInvite-${item.threePidInvite.event.getContent().public_key}`;
         }

@@ -27,7 +27,7 @@ import PosthogTrackers from "../../../PosthogTrackers";
 import { PollHistoryDialog } from "../../views/dialogs/PollHistoryDialog";
 import Modal from "../../../Modal";
 import ExportDialog from "../../views/dialogs/ExportDialog";
-import { ShareDialog } from "../../views/dialogs/ShareDialog";
+// import { ShareDialog } from "../../views/dialogs/ShareDialog";
 import { type RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { ReportRoomDialog } from "../../views/dialogs/ReportRoomDialog";
 import { Key } from "../../../Keyboard";
@@ -84,7 +84,7 @@ export interface RoomSummaryCardState {
     onRoomPinsClick: () => void;
     onRoomSettingsClick: (ev: Event) => void;
     onLeaveRoomClick: () => void;
-    onShareRoomClick: () => void;
+    // onShareRoomClick: () => void; // DISABLED: Share functionality
     onRoomExportClick: () => Promise<void>;
     onRoomPollHistoryClick: () => void;
     onReportRoomClick: () => Promise<void>;
@@ -199,11 +199,12 @@ export function useRoomSummaryCardViewModel(
         PosthogTrackers.trackInteraction("WebRightPanelRoomInfoSettingsButton", ev);
     };
 
-    const onShareRoomClick = (): void => {
-        Modal.createDialog(ShareDialog, {
-            target: room,
-        });
-    };
+    // DISABLED: Share functionality
+    // const onShareRoomClick = (): void => {
+    //     Modal.createDialog(ShareDialog, {
+    //         target: room,
+    //     });
+    // };
 
     const onRoomExportClick = async (): Promise<void> => {
         Modal.createDialog(ExportDialog, {
@@ -267,7 +268,7 @@ export function useRoomSummaryCardViewModel(
         onRoomPinsClick,
         onRoomSettingsClick,
         onLeaveRoomClick,
-        onShareRoomClick,
+        // onShareRoomClick, // DISABLED: Share functionality
         onRoomExportClick,
         onRoomPollHistoryClick,
         onReportRoomClick,

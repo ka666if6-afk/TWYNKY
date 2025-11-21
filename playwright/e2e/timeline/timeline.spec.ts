@@ -1443,7 +1443,7 @@ test.describe("Timeline", () => {
                 msgtype: "m.text",
                 body: user.userId,
                 format: "org.matrix.custom.html",
-                formatted_body: `<span data-mx-spoiler>https://matrix.to/#/${user.userId}</span>`,
+                formatted_body: `<span data-mx-spoiler>TWYNKY1/#/${user.userId}</span>`,
             });
 
             const screenshotOptions = {

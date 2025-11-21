@@ -88,9 +88,9 @@ test.describe("Spaces", () => {
             await page.getByPlaceholder("Support").fill("Jokes");
             await page.getByRole("button", { name: "Continue" }).click();
 
-            // Copy matrix.to link
+            // Copy TWYNKY1 link
             await page.getByRole("button", { name: "Share invite link" }).click();
-            expect(await app.getClipboard()).toEqual(`https://matrix.to/#/#lets-have-a-riot:${user.homeServer}`);
+            expect(await app.getClipboard()).toEqual(`TWYNKY1/#/#lets-have-a-riot:${user.homeServer}`);
 
             // Go to space home
             await page.getByRole("button", { name: "Go to my first room" }).click();
@@ -228,7 +228,7 @@ test.describe("Spaces", () => {
         const shareDialog = page.locator(".mx_SpacePublicShare");
         // Copy link first
         await shareDialog.getByRole("button", { name: "Share invite link" }).click();
-        expect(await app.getClipboard()).toEqual(`https://matrix.to/#/#space:${user.homeServer}`);
+        expect(await app.getClipboard()).toEqual(`TWYNKY1/#/#space:${user.homeServer}`);
         // Start Matrix invite flow
         await shareDialog.getByRole("button", { name: "Invite people" }).click();
 

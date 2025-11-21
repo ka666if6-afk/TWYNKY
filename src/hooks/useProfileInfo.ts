@@ -36,16 +36,30 @@ export const useProfileInfo = (): {
     const search = useCallback(
         async ({ query: term }: IProfileInfoOpts): Promise<boolean> => {
             updateQuery(term);
-            if (!term?.length || !term.startsWith("@") || !term.includes(":")) {
+            if (!term?.length || !term.startsWith("@")) {
                 setProfile(null);
                 return true;
             }
 
             setLoading(true);
             try {
-                const result = await MatrixClientPeg.safeGet().getProfileInfo(term);
+                const client = MatrixClientPeg.safeGet();
+                
+                // Use TWYNKY as default domain
+                const serverDomain = "TWYNKY";
+                const homeserverUrl = client.getHomeserverUrl();
+                
+                // Extract localpart from user input
+                let localpart = term.trim();
+                if (localpart.startsWith("@")) localpart = localpart.substring(1);
+                if (localpart.includes(":")) localpart = localpart.split(":")[0];
+                
+                // Format full user ID for profile fetch
+                const fullUserId = `@${localpart}:${serverDomain}`;
+                
+                const result = await client.getProfileInfo(fullUserId);
                 updateResult(term, {
-                    user_id: term,
+                    user_id: fullUserId,
                     avatar_url: result.avatar_url,
                     display_name: result.displayname,
                 });

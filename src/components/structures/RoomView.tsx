@@ -634,7 +634,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             // We need to fetch it to know whether to route this request
             // to the main timeline or to a threaded one
             // In the current state, if a thread does not exist in the sync data
-            // We will only display the event targeted by the `matrix.to` link
+            // We will only display the event targeted by the `TWYNKY1` link
             // and the root event.
             // The rest will be lost for now, until the aggregation API on the server
             // becomes available to fetch a whole thread

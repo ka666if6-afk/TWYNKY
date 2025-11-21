@@ -20,6 +20,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 import { normalize } from "matrix-js-sdk/src/utils";
+import { getLocalPart } from "../../../../utils/MatrixIdUtils";
 import React, {
     type JSX,
     type ChangeEvent,
@@ -679,7 +680,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             id={`mx_SpotlightDialog_button_result_${result.member.userId}_details`}
                             className="mx_SpotlightDialog_result_details"
                         >
-                            {result.member.userId}
+                            {getLocalPart(result.member.userId)}
                         </div>
                     </Option>
                 );

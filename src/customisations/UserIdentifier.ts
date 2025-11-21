@@ -7,6 +7,7 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import type { UserIdentifierCustomisations } from "@element-hq/element-web-module-api";
+import { getLocalPart } from "../utils/MatrixIdUtils";
 
 /**
  * Customise display of the user identifier
@@ -18,7 +19,8 @@ function getDisplayUserIdentifier(
     userId: string,
     { roomId, withDisplayName }: { roomId?: string; withDisplayName?: boolean },
 ): string | null {
-    return userId;
+    // Always display only @username (localpart) without the server domain
+    return getLocalPart(userId);
 }
 
 // A real customisation module will define and export one or more of the

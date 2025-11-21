@@ -17,6 +17,7 @@ import SettingsStore from "../settings/SettingsStore";
 import AskInviteAnywayDialog from "../components/views/dialogs/AskInviteAnywayDialog";
 import ConfirmUserActionDialog from "../components/views/dialogs/ConfirmUserActionDialog";
 import { openInviteProgressDialog } from "../components/views/dialogs/InviteProgressDialog.tsx";
+import { ensureFullMatrixId } from "./MatrixIdUtils";
 
 export enum InviteState {
     Invited = "invited",
@@ -167,10 +168,13 @@ export default class MultiInviter {
         if (addrType === AddressType.Email) {
             return this.matrixClient.inviteByEmail(roomId, addr);
         } else if (addrType === AddressType.MatrixUserId) {
+            // Ensure the address has the full Matrix ID format (with domain)
+            const fullMatrixId = ensureFullMatrixId(addr);
+            
             const room = this.matrixClient.getRoom(roomId);
             if (!room) throw new Error("Room not found");
 
-            const member = room.getMember(addr);
+            const member = room.getMember(fullMatrixId);
             if (member?.membership === KnownMembership.Join) {
                 throw new MatrixError({
                     errcode: USER_ALREADY_JOINED,
@@ -213,7 +217,7 @@ export default class MultiInviter {
 
             if (!ignoreProfile && SettingsStore.getValue("promptBeforeInviteUnknownUsers", this.roomId)) {
                 try {
-                    await this.matrixClient.getProfileInfo(addr);
+                    await this.matrixClient.getProfileInfo(fullMatrixId);
                 } catch (err) {
                     // The error handling during the invitation process covers any API.
                     // Some errors must to me mapped from profile API errors to more specific ones to avoid collisions.
@@ -232,7 +236,7 @@ export default class MultiInviter {
             if (this.reason !== undefined) opts.reason = this.reason;
             if (SettingsStore.getValue("feature_share_history_on_invite")) opts.shareEncryptedHistory = true;
 
-            return this.matrixClient.invite(roomId, addr, opts);
+            return this.matrixClient.invite(roomId, fullMatrixId, opts);
         } else {
             throw new Error("Unsupported address");
         }

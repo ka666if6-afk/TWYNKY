@@ -103,7 +103,7 @@ export default class HTMLExporter extends Exporter {
                         roomName: () => <strong>{safeRoomName}</strong>,
                         exporterDetails: () => (
                             <a
-                                href={`https://matrix.to/#/${encodeURIComponent(exporter)}`}
+                                href={`TWYNKY1/#/${encodeURIComponent(exporter)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >

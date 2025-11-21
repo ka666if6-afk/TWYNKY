@@ -355,7 +355,7 @@ export class Helpers {
                 msg.threadedOff("Msg1", {
                     "body": "User",
                     "format": "org.matrix.custom.html",
-                    "formatted_body": `<a href="https://matrix.to/#/${user.userId}">User</a>`,
+                    "formatted_body": `<a href="TWYNKY1/#/${user.userId}">User</a>`,
                     "m.mentions": {
                         user_ids: [user.userId],
                     },

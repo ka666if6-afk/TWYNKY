@@ -17,6 +17,7 @@ import { _t } from "../../../../../languageHandler";
 import { MemberTileView } from "./common/MemberTileView";
 import { InvitedIconView } from "./common/InvitedIconView";
 import { type MemberWithSeparator } from "../../../../viewmodels/memberlist/MemberListViewModel";
+import { getLocalPart } from "../../../../../utils/MatrixIdUtils";
 
 interface IProps {
     /**
@@ -39,14 +40,14 @@ export function RoomMemberTileView(props: IProps): JSX.Element {
         <BaseAvatar
             size="32px"
             name={member.name}
-            idName={member.userId}
-            title={member.displayUserId}
+            idName={getLocalPart(member.userId)}
+            title={getLocalPart(member.userId)}
             url={member.avatarThumbnailUrl}
             altText={_t("common|user_avatar")}
         />
     );
     const name = vm.name;
-    const nameJSX = <DisambiguatedProfile withTooltip member={member} fallbackName={name || ""} />;
+    const nameJSX = <DisambiguatedProfile withTooltip member={{...member, userId: getLocalPart(member.userId)}} fallbackName={name || ""} />;
 
     const presenceState = member.presenceState;
     let presenceJSX: JSX.Element | undefined;

@@ -376,7 +376,7 @@ test.describe("Room list", () => {
                         "msgtype": "m.text",
                         "body": "User",
                         "format": "org.matrix.custom.html",
-                        "formatted_body": `<a href="https://matrix.to/#/${userId}">User</a>`,
+                        "formatted_body": `<a href="TWYNKY1/#/${userId}">User</a>`,
                         "m.mentions": {
                             user_ids: [userId],
                         },

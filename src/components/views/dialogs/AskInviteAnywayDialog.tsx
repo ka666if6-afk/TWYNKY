@@ -13,6 +13,7 @@ import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import BaseDialog from "./BaseDialog";
+import { getLocalPart } from "../../../utils/MatrixIdUtils";
 
 export interface UnknownProfile {
     userId: string;
@@ -58,7 +59,7 @@ export default function AskInviteAnywayDialog({
 
     const errorList = unknownProfileUsers.map((address) => (
         <li key={address.userId}>
-            {address.userId}: {address.errorText}
+            {getLocalPart(address.userId)}: {address.errorText}
         </li>
     ));
 

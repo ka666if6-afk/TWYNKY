@@ -666,7 +666,26 @@ export class StopGapWidgetDriver extends WidgetDriver {
     public async searchUserDirectory(searchTerm: string, limit?: number): Promise<ISearchUserDirectoryResult> {
         const client = MatrixClientPeg.safeGet();
 
-        const { limited, results } = await client.searchUserDirectory({ term: searchTerm, limit });
+        // Accept localpart without domain (e.g. "alice" or "@alice").
+        // For partial/autocomplete searches we should send the localpart (without '@')
+        // to the homeserver so it can return matches as the user types.
+        // Try multiple candidate terms for broader coverage (localpart, full MXID).
+        const { buildUserSearchTerms } = await import("../../utils/MatrixIdUtils");
+        const candidates = buildUserSearchTerms(searchTerm);
+        let limited: boolean = false;
+        let results: any[] = [];
+        for (const candidate of candidates) {
+            try {
+                const res = await client.searchUserDirectory({ term: candidate, limit });
+                if (res?.results?.length) {
+                    limited = res.limited;
+                    results = res.results;
+                    break;
+                }
+            } catch {
+                // try next candidate
+            }
+        }
 
         return {
             limited,

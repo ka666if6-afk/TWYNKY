@@ -72,7 +72,7 @@ interface Props extends BaseProps {
     /**
      * The target to link to.
      * This can be a Room, User, RoomMember, or MatrixEvent or an already computed URL.
-     * A <u>matrix.to</u> link will be generated out of it if it's not already a url.
+     * A <u>TWYNKY1</u> link will be generated out of it if it's not already a url.
      */
     target: Room | User | RoomMember | URL;
     /**

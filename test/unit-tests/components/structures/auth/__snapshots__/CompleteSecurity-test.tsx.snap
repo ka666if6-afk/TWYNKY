@@ -72,7 +72,7 @@ exports[`CompleteSecurity Allows verifying with another device if one is availab
                   <span>
                     <a
                       class="mx_ExternalLink"
-                      href="https://element.io/help#encryption-device-verification"
+                      href="TWYNKY22help#encryption-device-verification"
                       rel="noreferrer noopener"
                       target="_blank"
                     >
@@ -136,28 +136,28 @@ exports[`CompleteSecurity Allows verifying with another device if one is availab
       role="contentinfo"
     >
       <a
-        href="https://element.io/blog"
+        href="TWYNKY22blog"
         rel="noreferrer noopener"
         target="_blank"
       >
         Blog
       </a>
       <a
-        href="https://mastodon.matrix.org/@Element"
+        href=""
         rel="noreferrer noopener"
         target="_blank"
       >
         Mastodon
       </a>
       <a
-        href="https://github.com/element-hq/element-web"
+        href=""
         rel="noreferrer noopener"
         target="_blank"
       >
         GitHub
       </a>
       <a
-        href="https://matrix.org"
+        href=""
         rel="noreferrer noopener"
         target="_blank"
       >
@@ -240,7 +240,7 @@ exports[`CompleteSecurity Allows verifying with recovery key if one is available
                   <span>
                     <a
                       class="mx_ExternalLink"
-                      href="https://element.io/help#encryption-device-verification"
+                      href="TWYNKY22help#encryption-device-verification"
                       rel="noreferrer noopener"
                       target="_blank"
                     >
@@ -293,28 +293,28 @@ exports[`CompleteSecurity Allows verifying with recovery key if one is available
       role="contentinfo"
     >
       <a
-        href="https://element.io/blog"
+        href="TWYNKY22blog"
         rel="noreferrer noopener"
         target="_blank"
       >
         Blog
       </a>
       <a
-        href="https://mastodon.matrix.org/@Element"
+        href=""
         rel="noreferrer noopener"
         target="_blank"
       >
         Mastodon
       </a>
       <a
-        href="https://github.com/element-hq/element-web"
+        href=""
         rel="noreferrer noopener"
         target="_blank"
       >
         GitHub
       </a>
       <a
-        href="https://matrix.org"
+        href=""
         rel="noreferrer noopener"
         target="_blank"
       >

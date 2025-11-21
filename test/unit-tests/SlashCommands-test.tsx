@@ -328,7 +328,7 @@ describe("SlashCommands", () => {
         });
 
         it("should handle matrix.org permalinks", () => {
-            command.run(client, roomId, null, "https://matrix.to/#/!roomId:server/$eventId");
+            command.run(client, roomId, null, "TWYNKY1/#/!roomId:server/$eventId");
             expect(dispatcher.dispatch).toHaveBeenCalledWith(
                 expect.objectContaining({
                     action: "view_room",

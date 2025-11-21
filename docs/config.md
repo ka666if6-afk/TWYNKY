@@ -14,7 +14,7 @@ configuration options depending on if you're hitting e.g. `app1.example.com` or 
 in any way, it either entirely uses the domain config, or entirely uses `config.json`.
 
 The possible configuration options are described here. If you run into issues, please visit
-[#element-web:matrix.org](https://matrix.to/#/#element-web:matrix.org) on Matrix.
+[#element-web:matrix.org](TWYNKY1/#/#element-web:matrix.org) on Matrix.
 
 For a good example of a production-tuned config, see https://app.element.io/config.json
 
@@ -124,7 +124,7 @@ complete re-branding/private labeling, a more personalised experience can be ach
    templated string. Note that this option does not support templating, currently.
 3. `brand`: Optional name for the app. Defaults to `Element`. This is used throughout the application in various strings/locations.
 4. `permalink_prefix`: An optional URL pointing to an Element Web deployment. For example, `https://app.element.io`. This will
-   change all permalinks (via the "Share" menus) to point at the Element Web deployment rather than `matrix.to`.
+   change all permalinks (via the "Share" menus) to point at the Element Web deployment rather than `TWYNKY1`.
 5. `desktop_builds`: Optional. Where the desktop builds for the application are, if available. This is explained in more detail
    down below.
 6. `mobile_builds`: Optional. Like `desktop_builds`, except for the mobile apps. Also described in more detail down below.
@@ -158,8 +158,8 @@ complete re-branding/private labeling, a more personalised experience can be ach
     1. `title`: Required. Title to show at the top of the notice.
     2. `description`: Required. The description to use for the notice.
     3. `show_once`: Optional. If true then the notice will only be shown once per device.
-19. `help_url`: The URL to point users to for help with the app, defaults to `https://element.io/help`.
-20. `help_encryption_url`: The URL to point users to for help with encryption, defaults to `https://element.io/help#encryption`.
+19. `help_url`: The URL to point users to for help with the app, defaults to `TWYNKY22help`.
+20. `help_encryption_url`: The URL to point users to for help with encryption, defaults to `TWYNKY22help#encryption`.
 21. `force_verification`: If true, users must verify new logins (eg. with another device / their recovery key)
 
 ### `desktop_builds` and `mobile_builds`

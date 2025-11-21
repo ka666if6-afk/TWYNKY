@@ -47,7 +47,7 @@ describe("ShareDialog", () => {
         {
             name: "a room member",
             title: "Share User",
-            url: "https://matrix.to/#/@alice:example.org",
+            url: "TWYNKY1/#/@alice:example.org",
             getTarget: getRoomMember,
         },
     ])("should render a share dialog for $name", async ({ title, url, getTarget }) => {
@@ -62,7 +62,7 @@ describe("ShareDialog", () => {
     });
 
     it("should render a share dialog for a room", async () => {
-        const expectedURL = "https://matrix.to/#/!1:example.org";
+        const expectedURL = "TWYNKY1/#/!1:example.org";
         jest.spyOn(room.getLiveTimeline(), "getEvents").mockReturnValue([new MatrixEvent({ event_id: "!eventId" })]);
 
         const { asFragment } = renderComponent(room);
@@ -76,14 +76,14 @@ describe("ShareDialog", () => {
 
         // Click on the checkbox to link to the most recent message
         await userEvent.click(screen.getByRole("checkbox", { name: "Link to most recent message" }));
-        const newExpectedURL = "https://matrix.to/#/!1:example.org/!eventId";
+        const newExpectedURL = "TWYNKY1/#/!1:example.org/!eventId";
         expect(screen.getByText(newExpectedURL)).toBeInTheDocument();
     });
 
     it("should render a share dialog for a matrix event", async () => {
         const matrixEvent = new MatrixEvent({ event_id: "!eventId" });
         const permalinkCreator = new RoomPermalinkCreator(room);
-        const expectedURL = "https://matrix.to/#/!1:example.org/!eventId";
+        const expectedURL = "TWYNKY1/#/!1:example.org/!eventId";
 
         const { asFragment } = render(
             <ShareDialog target={matrixEvent} permalinkCreator={permalinkCreator} onFinished={jest.fn()} />,
@@ -99,7 +99,7 @@ describe("ShareDialog", () => {
 
         // Click on the checkbox to link to the room
         await userEvent.click(screen.getByRole("checkbox", { name: "Link to selected message" }));
-        expect(screen.getByText("https://matrix.to/#/!1:example.org")).toBeInTheDocument();
+        expect(screen.getByText("TWYNKY1/#/!1:example.org")).toBeInTheDocument();
     });
 
     it("should change the copy button text when clicked", async () => {

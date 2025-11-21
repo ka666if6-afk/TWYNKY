@@ -14,7 +14,7 @@ import { _t, UserFriendlyError } from "../../../../languageHandler";
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import dis from "../../../../dispatcher/dispatcher";
 import PosthogTrackers from "../../../../PosthogTrackers";
-import { ShareDialog } from "../../../views/dialogs/ShareDialog";
+// import { ShareDialog } from "../../../views/dialogs/ShareDialog";
 import { type ComposerInsertPayload } from "../../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from "../../../../dispatcher/actions";
 import { TimelineRenderingType } from "../../../../contexts/RoomContext";
@@ -37,8 +37,8 @@ export interface UserInfoBasicOptionsState {
     onInsertPillButton: () => void;
     // Method called when a read receipt button is clicked, will add a pill in the input message field
     onReadReceiptButton: () => void;
-    // Method called when a share user button is clicked, will display modal with profile to share
-    onShareUserClick: () => void;
+    // DISABLED: Share functionality
+    // onShareUserClick: () => void;
     // Method called when a invite button is clicked, will display modal to invite user
     onInviteUserButton: (fallbackRoomId: string, evt: Event) => Promise<void>;
     // Method called when the DM button is clicked, will open a DM with the selected member
@@ -122,11 +122,12 @@ export const useUserInfoBasicOptionsViewModel = (room: Room, member: User | Room
         PosthogTrackers.trackInteraction("WebRightPanelRoomUserInfoInviteButton", ev);
     };
 
-    const onShareUserClick = (): void => {
-        Modal.createDialog(ShareDialog, {
-            target: member,
-        });
-    };
+    // DISABLED: Share functionality
+    // const onShareUserClick = (): void => {
+    //     Modal.createDialog(ShareDialog, {
+    //         target: member,
+    //     });
+    // };
 
     const onOpenDmForUser = async (user: Member): Promise<void> => {
         const avatarUrl = user instanceof User ? user.avatarUrl : user.getMxcAvatarUrl();
@@ -146,7 +147,7 @@ export const useUserInfoBasicOptionsViewModel = (room: Room, member: User | Room
         onReadReceiptButton,
         onInsertPillButton,
         onInviteUserButton,
-        onShareUserClick,
+        // onShareUserClick, // DISABLED: Share functionality
         onOpenDmForUser,
     };
 };

@@ -74,6 +74,10 @@ export default function MemberAvatar({
                     roomId: member?.roomId ?? "",
                 }) ?? fallbackUserId;
         }
+        // Prefer showing only the localpart (eg. @alice) for identifiers/title
+        if (title && title.startsWith("@") && title.includes(":")) {
+            title = title.split(":")[0];
+        }
     }
 
     return (
@@ -82,7 +86,7 @@ export default function MemberAvatar({
             size={size}
             name={name ?? ""}
             title={hideTitle ? undefined : title}
-            idName={member?.userId ?? fallbackUserId}
+            idName={member?.userId ? (member.userId.split(":" as any)[0] as string) : fallbackUserId}
             url={imageUrl}
             onClick={
                 viewUserOnClick

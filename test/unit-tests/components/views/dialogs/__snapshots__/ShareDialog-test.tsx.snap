@@ -32,7 +32,7 @@ exports[`ShareDialog should not render the QR code if disabled 1`] = `
         class="mx_ShareDialog_top"
       >
         <span>
-          https://matrix.to/#/!1:example.org
+          TWYNKY1/#/!1:example.org
         </span>
       </div>
       <button
@@ -60,7 +60,7 @@ exports[`ShareDialog should not render the QR code if disabled 1`] = `
         class="mx_ShareDialog_social"
       >
         <a
-          href="https://www.facebook.com/sharer/sharer.php?u=https://matrix.to/#/!1:example.org"
+          href="https://www.facebook.com/sharer/sharer.php?u=TWYNKY1/#/!1:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="Facebook"
@@ -71,7 +71,7 @@ exports[`ShareDialog should not render the QR code if disabled 1`] = `
           />
         </a>
         <a
-          href="https://twitter.com/home?status=https://matrix.to/#/!1:example.org"
+          href="https://twitter.com/home?status=TWYNKY1/#/!1:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="Twitter"
@@ -82,7 +82,7 @@ exports[`ShareDialog should not render the QR code if disabled 1`] = `
           />
         </a>
         <a
-          href="https://www.linkedin.com/shareArticle?mini=true&url=https://matrix.to/#/!1:example.org"
+          href="https://www.linkedin.com/shareArticle?mini=true&url=TWYNKY1/#/!1:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="LinkedIn"
@@ -93,7 +93,7 @@ exports[`ShareDialog should not render the QR code if disabled 1`] = `
           />
         </a>
         <a
-          href="https://www.reddit.com/submit?url=https://matrix.to/#/!1:example.org"
+          href="https://www.reddit.com/submit?url=TWYNKY1/#/!1:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="Reddit"
@@ -104,7 +104,7 @@ exports[`ShareDialog should not render the QR code if disabled 1`] = `
           />
         </a>
         <a
-          href="mailto:?body=https://matrix.to/#/!1:example.org"
+          href="mailto:?body=TWYNKY1/#/!1:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="email"
@@ -178,7 +178,7 @@ exports[`ShareDialog should not render the socials if disabled 1`] = `
           </div>
         </div>
         <span>
-          https://matrix.to/#/!1:example.org
+          TWYNKY1/#/!1:example.org
         </span>
       </div>
       <button
@@ -265,7 +265,7 @@ exports[`ShareDialog should render a share dialog for a matrix event 1`] = `
           </div>
         </div>
         <span>
-          https://matrix.to/#/!1:example.org/!eventId
+          TWYNKY1/#/!1:example.org/!eventId
         </span>
       </div>
       <label>
@@ -321,7 +321,7 @@ exports[`ShareDialog should render a share dialog for a matrix event 1`] = `
         class="mx_ShareDialog_social"
       >
         <a
-          href="https://www.facebook.com/sharer/sharer.php?u=https://matrix.to/#/!1:example.org/!eventId"
+          href="https://www.facebook.com/sharer/sharer.php?u=TWYNKY1/#/!1:example.org/!eventId"
           rel="noreferrer noopener"
           target="_blank"
           title="Facebook"
@@ -332,7 +332,7 @@ exports[`ShareDialog should render a share dialog for a matrix event 1`] = `
           />
         </a>
         <a
-          href="https://twitter.com/home?status=https://matrix.to/#/!1:example.org/!eventId"
+          href="https://twitter.com/home?status=TWYNKY1/#/!1:example.org/!eventId"
           rel="noreferrer noopener"
           target="_blank"
           title="Twitter"
@@ -343,7 +343,7 @@ exports[`ShareDialog should render a share dialog for a matrix event 1`] = `
           />
         </a>
         <a
-          href="https://www.linkedin.com/shareArticle?mini=true&url=https://matrix.to/#/!1:example.org/!eventId"
+          href="https://www.linkedin.com/shareArticle?mini=true&url=TWYNKY1/#/!1:example.org/!eventId"
           rel="noreferrer noopener"
           target="_blank"
           title="LinkedIn"
@@ -354,7 +354,7 @@ exports[`ShareDialog should render a share dialog for a matrix event 1`] = `
           />
         </a>
         <a
-          href="https://www.reddit.com/submit?url=https://matrix.to/#/!1:example.org/!eventId"
+          href="https://www.reddit.com/submit?url=TWYNKY1/#/!1:example.org/!eventId"
           rel="noreferrer noopener"
           target="_blank"
           title="Reddit"
@@ -365,7 +365,7 @@ exports[`ShareDialog should render a share dialog for a matrix event 1`] = `
           />
         </a>
         <a
-          href="mailto:?body=https://matrix.to/#/!1:example.org/!eventId"
+          href="mailto:?body=TWYNKY1/#/!1:example.org/!eventId"
           rel="noreferrer noopener"
           target="_blank"
           title="email"
@@ -439,7 +439,7 @@ exports[`ShareDialog should render a share dialog for a room 1`] = `
           </div>
         </div>
         <span>
-          https://matrix.to/#/!1:example.org
+          TWYNKY1/#/!1:example.org
         </span>
       </div>
       <label>
@@ -494,7 +494,7 @@ exports[`ShareDialog should render a share dialog for a room 1`] = `
         class="mx_ShareDialog_social"
       >
         <a
-          href="https://www.facebook.com/sharer/sharer.php?u=https://matrix.to/#/!1:example.org"
+          href="https://www.facebook.com/sharer/sharer.php?u=TWYNKY1/#/!1:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="Facebook"
@@ -505,7 +505,7 @@ exports[`ShareDialog should render a share dialog for a room 1`] = `
           />
         </a>
         <a
-          href="https://twitter.com/home?status=https://matrix.to/#/!1:example.org"
+          href="https://twitter.com/home?status=TWYNKY1/#/!1:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="Twitter"
@@ -516,7 +516,7 @@ exports[`ShareDialog should render a share dialog for a room 1`] = `
           />
         </a>
         <a
-          href="https://www.linkedin.com/shareArticle?mini=true&url=https://matrix.to/#/!1:example.org"
+          href="https://www.linkedin.com/shareArticle?mini=true&url=TWYNKY1/#/!1:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="LinkedIn"
@@ -527,7 +527,7 @@ exports[`ShareDialog should render a share dialog for a room 1`] = `
           />
         </a>
         <a
-          href="https://www.reddit.com/submit?url=https://matrix.to/#/!1:example.org"
+          href="https://www.reddit.com/submit?url=TWYNKY1/#/!1:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="Reddit"
@@ -538,7 +538,7 @@ exports[`ShareDialog should render a share dialog for a room 1`] = `
           />
         </a>
         <a
-          href="mailto:?body=https://matrix.to/#/!1:example.org"
+          href="mailto:?body=TWYNKY1/#/!1:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="email"
@@ -612,7 +612,7 @@ exports[`ShareDialog should render a share dialog for a room member 1`] = `
           </div>
         </div>
         <span>
-          https://matrix.to/#/@alice:example.org
+          TWYNKY1/#/@alice:example.org
         </span>
       </div>
       <button
@@ -640,7 +640,7 @@ exports[`ShareDialog should render a share dialog for a room member 1`] = `
         class="mx_ShareDialog_social"
       >
         <a
-          href="https://www.facebook.com/sharer/sharer.php?u=https://matrix.to/#/@alice:example.org"
+          href="https://www.facebook.com/sharer/sharer.php?u=TWYNKY1/#/@alice:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="Facebook"
@@ -651,7 +651,7 @@ exports[`ShareDialog should render a share dialog for a room member 1`] = `
           />
         </a>
         <a
-          href="https://twitter.com/home?status=https://matrix.to/#/@alice:example.org"
+          href="https://twitter.com/home?status=TWYNKY1/#/@alice:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="Twitter"
@@ -662,7 +662,7 @@ exports[`ShareDialog should render a share dialog for a room member 1`] = `
           />
         </a>
         <a
-          href="https://www.linkedin.com/shareArticle?mini=true&url=https://matrix.to/#/@alice:example.org"
+          href="https://www.linkedin.com/shareArticle?mini=true&url=TWYNKY1/#/@alice:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="LinkedIn"
@@ -673,7 +673,7 @@ exports[`ShareDialog should render a share dialog for a room member 1`] = `
           />
         </a>
         <a
-          href="https://www.reddit.com/submit?url=https://matrix.to/#/@alice:example.org"
+          href="https://www.reddit.com/submit?url=TWYNKY1/#/@alice:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="Reddit"
@@ -684,7 +684,7 @@ exports[`ShareDialog should render a share dialog for a room member 1`] = `
           />
         </a>
         <a
-          href="mailto:?body=https://matrix.to/#/@alice:example.org"
+          href="mailto:?body=TWYNKY1/#/@alice:example.org"
           rel="noreferrer noopener"
           target="_blank"
           title="email"

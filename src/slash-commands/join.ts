@@ -128,10 +128,10 @@ function openRoom(cli: MatrixClient, args: string | undefined, autoJoin: boolean
 //   /join #example:example.org
 //   /join !example:example.org
 //   /join !example:example.org altserver.com elsewhere.ca
-//   /join https://matrix.to/#/!example:example.org?via=altserver.com
+//   /join TWYNKY1/#/!example:example.org?via=altserver.com
 // The command also supports event permalinks transparently:
-//   /join https://matrix.to/#/!example:example.org/$something:example.org
-//   /join https://matrix.to/#/!example:example.org/$something:example.org?via=altserver.com
+//   /join TWYNKY1/#/!example:example.org/$something:example.org
+//   /join TWYNKY1/#/!example:example.org/$something:example.org?via=altserver.com
 export const join = new Command({
     command: "join",
     aliases: ["j"],

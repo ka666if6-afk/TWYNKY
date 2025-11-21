@@ -1,0 +1,65 @@
+diff --git a/src/components/views/rooms/RoomHeader/CallGuestLinkButton.tsx b/src/components/views/rooms/RoomHeader/CallGuestLinkButton.tsx
+index 1111111..2222222 100644
+--- a/src/components/views/rooms/RoomHeader/CallGuestLinkButton.tsx
++++ b/src/components/views/rooms/RoomHeader/CallGuestLinkButton.tsx
+@@ -10,7 +10,7 @@ import React, { useCallback } from "react";
+ import { logger } from "matrix-js-sdk/src/logger";
+ import { EventType, JoinRule, type Room } from "matrix-js-sdk/src/matrix";
+ 
+ import Modal from "../../../../Modal";
+-import { ShareDialog } from "../../dialogs/ShareDialog";
++// import { ShareDialog } from "../../dialogs/ShareDialog";
+ import { _t } from "../../../../languageHandler";
+ import { calculateRoomVia } from "../../../../utils/permalinks/Permalinks";
+ import BaseDialog from "../../dialogs/BaseDialog";
+@@ -19,7 +19,7 @@ import JoinRuleSettings from "../../settings/JoinRuleSettings";
+ import SettingsStore from "../../../../settings/SettingsStore";
+ 
+ /**
+- * Display a button to open a dialog to share a link to the call using a element call guest spa url (`element_call:guest_spa_url` in the EW config).
++ * DISABLED: Display a button to open a dialog to share a link to the call using a element call guest spa url (`element_call:guest_spa_url` in the EW config).
+  * @param room
+  * @returns Nothing if there is not the option to share a link (No guest_spa_url is set) or a button to open a dialog to share the link.
+  */
+@@ -50,17 +50,17 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
+ 
+     const showLinkModal = useCallback(() => {
+         try {
+             // generateCallLink throws if the invite rules are not met
+             const target = generateCallLink();
+-            Modal.createDialog(ShareDialog, {
++            /* DISABLED: Share functionality
++            Modal.createDialog(ShareDialog, {
+                 target,
+                 customTitle: _t("share|share_call"),
+                 subtitle: _t("share|share_call_subtitle"),
+             });
++            */
+         } catch (e) {
+             logger.error("Could not generate call link.", e);
+         }
+     }, [generateCallLink]);
+ 
+     const shareClick = useCallback(() => {
+         if (isRoomJoinable()) {
+@@ -76,11 +76,11 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
+     }, [isRoomJoinable, showLinkModal, room, canInvite]);
+ 
+     return (
+         <>
+-            {canInviteGuests && (
+-                <Tooltip label={_t("voip|get_call_link")}>
+-                    <IconButton onClick={shareClick}>
++            {/* DISABLED: Share button
++            {canInviteGuests && (
++                <Tooltip label={_t("voip|get_call_link")}>
++                    <IconButton onClick={shareClick}>
+                         <ExternalLinkIcon />
+                     </IconButton>
+                 </Tooltip>
+-            )}
++            )}
++            */}
+         </>
+     );
+ };

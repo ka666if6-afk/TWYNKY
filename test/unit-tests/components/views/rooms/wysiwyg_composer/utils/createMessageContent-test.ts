@@ -132,7 +132,7 @@ describe("createMessageContent", () => {
         });
 
         it("Should replace user mentions with user name in body", async () => {
-            const messageComposerState = `<a href="https://matrix.to/#/@test_user:element.io" contenteditable="false" data-mention-type="user" style="some styling">a test user</a> `;
+            const messageComposerState = `<a href="TWYNKY1/#/@test_user:element.io" contenteditable="false" data-mention-type="user" style="some styling">a test user</a> `;
 
             const content = await createMessageContent(messageComposerState, false, {});
 
@@ -140,7 +140,7 @@ describe("createMessageContent", () => {
         });
 
         it("Should replace room mentions with room mxid in body", async () => {
-            const messageComposerState = `<a href="https://matrix.to/#/#test_room:element.io" contenteditable="false" data-mention-type="room" style="some styling">a test room</a> `;
+            const messageComposerState = `<a href="TWYNKY1/#/#test_room:element.io" contenteditable="false" data-mention-type="room" style="some styling">a test room</a> `;
 
             const content = await createMessageContent(messageComposerState, false, {});
 

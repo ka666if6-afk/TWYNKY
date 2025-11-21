@@ -367,7 +367,7 @@ describe("ProxiedApiModule", () => {
         const api = new ProxiedModuleApi();
 
         it("should call navigateToPermalink with the correct parameters", async () => {
-            const link = "https://matrix.to/#/!roomId:server.com";
+            const link = "TWYNKY1/#/!roomId:server.com";
             const spy = jest.spyOn(navigator, "navigateToPermalink");
 
             await api.navigatePermalink(link);
@@ -375,7 +375,7 @@ describe("ProxiedApiModule", () => {
         });
 
         it("should set auto_join to true when join=true", async () => {
-            const link = "https://matrix.to/#/#alias:server.com";
+            const link = "TWYNKY1/#/#alias:server.com";
             const spy = jest.spyOn(defaultDispatcher, "dispatch");
 
             await api.navigatePermalink(link, true);

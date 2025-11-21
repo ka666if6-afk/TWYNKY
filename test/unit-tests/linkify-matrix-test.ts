@@ -414,7 +414,7 @@ describe("linkify-matrix", () => {
     });
 
     describe("matrix-prefixed domains", () => {
-        const acceptedDomains = ["matrix.org", "matrix.to", "matrix-help.org", "matrix123.org"];
+        const acceptedDomains = ["matrix.org", "TWYNKY1", "matrix-help.org", "matrix123.org"];
         for (const domain of acceptedDomains) {
             it("accepts " + domain, () => {
                 const test = domain;
