@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktwynky_web=self.webpackChunktwynky_web||[]).push([[3508],{"./src/effects/effect.ts":()=>{}}]);

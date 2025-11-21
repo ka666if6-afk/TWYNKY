@@ -1,0 +1,1 @@
+(self.webpackChunktwynky_web=self.webpackChunktwynky_web||[]).push([[5215],{"./src/effects/ICanvasEffect.ts":()=>{}}]);
